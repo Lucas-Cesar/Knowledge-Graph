@@ -11,9 +11,9 @@ from sklearn.cluster import DBSCAN
 pd.set_option('display.max_columns', None)
 df = pd.read_csv("vgsales.csv")
 
-n_jogos = 20
+n_jogos = 35
 df = df.head(n_jogos)
-colunas_para_imprimir = ['Name', 'Platform', 'Year', 'Genre', 'Publisher', 'Global_Sales', 'classe_vendas']
+
 
 G = nx.Graph()
 G.add_nodes_from(df['Name'])
@@ -130,8 +130,9 @@ def obter_relacao(v1, v2):
         return None
 
 
+print(numero_de_arestas())
 # Visualize the shortest path
-pos = nx.spring_layout(G, seed=42, k=0.9)
+pos = nx.spring_layout(G, seed=80, k=1.4)
 labels = nx.get_edge_attributes(G, 'label')
 
 
@@ -163,14 +164,5 @@ plt.title('Graph Clustering using K-Means')
 plt.show()
 
 
-#Dividir em grupos usando DBSCAN
-# Perform DBSCAN clustering on node embeddings
-dbscan = DBSCAN(eps=1.0, min_samples=2) # Adjust eps and min_samples
-cluster_labels = dbscan.fit_predict(embeddings)
-
-plt.figure(figsize=(12, 10))
-nx.draw(G, pos, with_labels=True, font_size=10, node_size=400, node_color=cluster_labels, cmap=plt.cm.Set1, edge_color='gray', alpha=0.6)
-plt.title('Graph Clustering using DBSCAN')
-plt.show()
 
 
